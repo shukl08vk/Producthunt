@@ -1,0 +1,35 @@
+class Error(Exception):
+    """Base class for other exceptions"""
+    pass
+
+
+class MinimumDepositError(Error):
+    """Raised when the input value is too small"""
+    pass
+
+
+class MinimumBalanceError(Error):
+    """Raised when the input value is too large"""
+    pass
+
+
+
+
+
+
+def Bank_ATM(balance,choice,amount):
+    # Write your code here
+    if balance<500:
+        raise ValueError('As per the Minimum Balance Policy, Balance must be at least 500')
+    if choice is 1:
+        if amount<2000:
+            raise MinimumDepositError('The Minimum amount of Deposit should be 2000')
+        else:
+            balance=balance+amount
+            print('Updated Balance Amount:  '+str(balance))
+    if choice is 2:
+        balance=balance-amount
+        if balance <500:
+            raise MinimumBalanceError('You cannot withdraw this amount due to Minimum Balance Policy')
+        else:
+            print('Updated Balance Amount:  '+ str(balance))
