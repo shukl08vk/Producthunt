@@ -37,10 +37,11 @@ def detail(request,product_id):
     product=get_object_or_404(Product,pk=product_id)
     return render(request,'products/detail.html',{'product':product})
 
-@login_required
+@login_required(login_url='/accounts/signup')
 def upvote(request,product_id):
     product=get_object_or_404(Product,pk=product_id)
-    product.votes_total+=1
+    product.users.add(request.user)
+    product.votes_total=product.users.count()
     product.save()
     return redirect('/products/'+str(product.id))
 

@@ -11,6 +11,7 @@ class Product(models.Model):
     icon = models.ImageField(upload_to='images/')
     votes_total = models.IntegerField(default=1)
     hunter=models.ForeignKey(User,on_delete=models.CASCADE)
+    users = models.ManyToManyField(User,related_name='vote_count')
 
     def __str__(self):
         return self.title
@@ -20,3 +21,4 @@ class Product(models.Model):
 
     def pub_date_pretty(self):
         return self.pub_date.strftime('%b %e %Y')
+
