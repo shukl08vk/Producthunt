@@ -5,6 +5,9 @@ from django.contrib import auth
 def signup(request):
     if request.method=='POST':
         #user has info and want a account now
+        #if request.POST['Username']=='' or request.POST['Username'] is None:
+        #  return render(request, 'accounts/signup.html', {'error':'Username must not be Empty'})
+
         if request.POST['Password1']==request.POST['Password2']:
             try:
                 user=User.objects.get(username=request.POST['Username'])
