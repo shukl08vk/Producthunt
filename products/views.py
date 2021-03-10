@@ -1,5 +1,6 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Product
 from django.utils import timezone
 
@@ -31,6 +32,16 @@ def create(request):
             return render(request, 'products/create.html',{'error':'All field are required'})
 
     return render(request, 'products/create.html')
+@login_required
+def delete(request,product_id):
+    product=get_object_or_404(Product,pk=product_id)
+    if request.user!=product.hunter:
+        return render(request,'products/detail.html',{'product':product})
+    product.delete()
+    messages.success(request, "Product Deleted successfully",
+                     extra_tags='alert alert-success alert-dismissible fade show')
+    return HttpResponseRedirect("/")
+    #return render(request,'products/detail.html',{'product':product})
 
 
 def detail(request,product_id):

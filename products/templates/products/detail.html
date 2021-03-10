@@ -51,6 +51,12 @@
 
     </form>
 
+    <form id="delete" method="POST" action="{% url 'delete' product.id %}">
+        {% csrf_token %}
+        <!--<input type="hidden">-->
+        <input type="submit" value="Delete" />
+    </form>
+
 
 
 {% endblock %}
