@@ -2,6 +2,7 @@
 {% extends 'base.html'  %}
 
 {% block content %}
+{% load humanize %}
 <!--div class="container-fluid ">-->
 <div class="jumbotron">
 <div class="container">
@@ -86,7 +87,7 @@
                     </span>
                 <span class="be-comment-time">
                     <i class="fa fa-clock-o"></i>
-                    {{ comment.timestamp }}
+                    {{ comment.timestamp | naturaltime }}
                 </span>
 
                 <p class="be-comment-text">
