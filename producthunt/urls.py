@@ -5,6 +5,9 @@ from products import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+admin.site.site_header="ProductHunt Admin"
+admin.site.title="ProductHunt Admin"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),

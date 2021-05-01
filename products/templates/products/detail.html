@@ -25,7 +25,13 @@
     </div>
     <div class="col-4">
         <a href="javascript:{document.getElementById('upvote').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ product.votes_total }}</button></a>
+        <br>
+        <a href="javascript:{document.getElementById('delete').submit()}"><button class="btn btn-danger btn-lg btn-block"> Delete </button></a>
     </div>
+    <div class="col-4">
+       
+    </div>
+
 </div>
 </div>
 
@@ -38,10 +44,58 @@
         <h4><span class="oi oi-clock"></span> {{ product.pub_date_pretty }}</h4>
     </div>
 </div>
-<div class="container">
-    <div class="row">
-    <div class="col-8">
-        <p>{{ product.body }}</p>
+<div class="container ">
+    <div class="row border-bottom">
+        <div class="col-8 ">
+            <p>{{ product.body }}</p>
+        </div>
+    </div>
+</div>
+<div class="container ">
+        <div class="row border-bottom">
+        <div class="col-8 ">
+            <h2>Comments ({{ comments.count }})</h2>
+        </div>
+        </div>
+    
+    <div class="be-comment-block border border-white">
+    {% if user.is_authenticated %}
+        <form action="/products/prodComment" method="post">
+            {% csrf_token %}
+            
+            
+
+            <div class='form-group'>
+                <label for="exampleInputEmail1">Post comment Here</label>
+                <br>
+                <input type="text" class='form-control' name='comments' placeholder="enter comments...">
+            </div>
+
+            <input type="hidden" name='ptitle' value="{{ product.title }}">
+            <input type="submit" value="Submit"></input>
+        </form>
+    {% else %}
+    <p>Please login to comment</p>
+    {% endif %}
+        <div class="be-comment-content">
+            {% for comment in comments %}
+            <div class="be-comment-content">
+                    
+                <span class="be-comment-name">
+                    <b>{{ comment.user.username }}</b> 
+                    </span>
+                <span class="be-comment-time">
+                    <i class="fa fa-clock-o"></i>
+                    {{ comment.timestamp }}
+                </span>
+
+                <p class="be-comment-text">
+                    {{ comment.comments }}
+                </p>
+            </div>
+
+            {% endfor %}
+        </div>  
     </div>
 </div>
 
@@ -54,7 +108,7 @@
     <form id="delete" method="POST" action="{% url 'delete' product.id %}">
         {% csrf_token %}
         <!--<input type="hidden">-->
-        <input type="submit" value="Delete" />
+        <input type="hidden">
     </form>
 
 

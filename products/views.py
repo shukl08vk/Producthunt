@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Product
+from .models import Product, ProdComment
 from django.utils import timezone
 
 
@@ -46,7 +46,8 @@ def delete(request,product_id):
 
 def detail(request,product_id):
     product=get_object_or_404(Product,pk=product_id)
-    return render(request,'products/detail.html',{'product':product})
+    comments=ProdComment.objects.filter(prod=product)
+    return render(request,'products/detail.html',{'product':product, 'comments':comments})
 
 @login_required(login_url='/accounts/signup')
 def upvote(request,product_id):
@@ -56,4 +57,17 @@ def upvote(request,product_id):
     product.save()
     return redirect('/products/'+str(product.id))
 
+def prodComment(request):
+    if request.method=="POST": 
+        comments= request.POST.get('comments')
+        user= request.user
+        prodtitle=request.POST.get('ptitle')
+        prod=Product.objects.get(title=prodtitle)
+
+        comments=ProdComment(comments=comments,user=user,prod=prod)
+        comments.save()
+        messages.success(request,'Comment successfully posted.')
+
+
+    return redirect('/products/'+str(prod.id))
 

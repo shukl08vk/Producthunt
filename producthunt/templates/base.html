@@ -21,6 +21,44 @@
     <!-- Favicons -->
     <!--<script type="text/javascript" src="{% static 'js/script.js' %}"></script>-->
   </head>
+  <style>
+    .be-comment-block {
+    margin-bottom: 50px !important;
+    border: 1px solid #edeff2;
+    border-radius: 2px;
+    padding: 50px 70px;
+    border:1px solid #ffffff;
+}
+
+.be-comment-content span {
+    display: inline-block;
+    width: 49%;
+    margin-bottom: 15px;
+}
+.comments-title {
+    font-size: 16px;
+    color: #262626;
+    margin-bottom: 15px;
+    font-family: 'Conv_helveticaneuecyr-bold';
+}
+.be-comment-time {
+    text-align: right;
+}
+
+.be-comment-time {
+    font-size: 11px;
+    color: #b4b7c1;
+}
+.be-comment-text {
+    font-size: 13px;
+    line-height: 18px;
+    color: #7a8192;
+    display: block;
+    background: #f6f6f7;
+    border: 1px solid #edeff2;
+    padding: 15px 20px 20px 20px;
+}
+  </style>
   <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -49,11 +87,22 @@
               {% endif %}
               </div>
             </div>
+
+            
             </div>
+            
           </nav>
 </header>
-
-
+<div class='container'>
+{% for message in messages  %}            
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          <strong>Message : </strong> {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  {% endfor %}    
+</div>
 <div class='container'>
 {% block content %}
 
